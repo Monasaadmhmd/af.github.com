@@ -1,0 +1,27 @@
+<?php include 'header.php';?>
+
+<?php
+// if he not logged in ; redirect to the index page
+if ($_SESSION ['user_type'] != "admin") {
+	header ( "Location: index.php" );
+}
+?>
+
+<h1 class="h3 mb-4 text-gray-800" align="center">Delete Customer</h1>
+
+<?php
+// delete the customer
+mysql_query ( "DELETE FROM customer WHERE id = $_GET[id]" ) or die ( 'error ' . mysql_error () );
+
+// if there is affected rows in the database;
+if (mysql_affected_rows () == 1) {
+	echo "<h3>customer Has been deleted successfuly ....</h3>";
+	
+	header ( "REFRESH:3; url=admin_manage_customers.php" );
+} else {
+	echo "<h2>There is an error in deleting customer</h2>";
+	header ( "REFRESH:3; url=admin_manage_customers.php" );
+}
+?>
+
+<?php include 'footer.php';?>
